@@ -1,6 +1,9 @@
 package go_study
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 /**
 全局变量
@@ -72,7 +75,16 @@ func person() {
 	fmt.Println(height)
 }
 
+var cwd string = "test"
+
+func test1() {
+	cwd, err := os.Getwd() // NOTE: wrong!
+	fmt.Print(cwd)
+	fmt.Print(err)
+}
+
 func main() {
+	test1()
 	global1()
 	fmt.Println(height)
 	global2()

@@ -4,7 +4,31 @@ import "fmt"
 
 type cb func(num int) int
 
+type ChipType int
+
+const (
+	None ChipType = iota
+	CPU           // 中央处理器
+	GPU           // 图形处理器
+)
+
+//方法 相当于类ChipType的成员方法
+func (c ChipType) String() string {
+	switch c {
+	case None:
+		return "None"
+	case CPU:
+		return "CPU"
+	case GPU:
+		return "GPU"
+	}
+	return "N/A"
+}
+
 func main() {
+	// 输出CPU的值并以整型格式显示
+	fmt.Printf(CPU.String())
+	fmt.Printf("%s %d", CPU, CPU)
 	x := 12
 	y := 13
 	x, y = swap(x, y)
