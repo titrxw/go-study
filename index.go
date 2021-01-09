@@ -31,4 +31,15 @@ func main() {
 
 	var country string = "hello,中国"
 	fmt.Println(len(country)) //5 + 1 + 6
+
+	var str string = "test"
+	var data []byte = []byte(str)
+	fmt.Print(str)
+	fmt.Print(data)
+
+	var data1 [10]byte
+	data1[0] = 'T'
+	data1[1] = 'E'
+	var str1 string = string(data1[:])
+	fmt.Print(str1)
 }
