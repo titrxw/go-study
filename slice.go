@@ -4,6 +4,13 @@ import "fmt"
 
 //https://blog.csdn.net/ahilll/article/details/84624120
 
+func testAppend(test []int) {
+	test[0] = 3
+	test = append(test, 2)
+	test[0] = 4
+	fmt.Println(test) //[4,2]
+}
+
 func newSlice() {
 	tmp := []int{1, 2, 3, 4}
 	fmt.Println(len(tmp))
@@ -44,4 +51,9 @@ func newSlice() {
 
 func main() {
 	newSlice()
+
+	test12 := []int{1}
+	fmt.Println(test12) //[1]
+	testAppend(test12)
+	fmt.Println(test12) //[3]
 }
