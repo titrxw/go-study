@@ -15,7 +15,6 @@ func increment(group *sync.WaitGroup, ch chan bool, x *int) {
 	ch <- true
 	*x = *x + 1
 	<-ch
-
 }
 
 func chanLock() {
@@ -24,14 +23,42 @@ func chanLock() {
 
 	var chanGroup sync.WaitGroup
 	chanGroup.Add(1000)
+
 	var x int
 	for i := 0; i < 1000; i++ {
 		go increment(&chanGroup, pipline, &x)
 	}
-	chanGroup.Wait()
 	fmt.Println("x 的值：", x)
+
+	chanGroup.Wait()
+}
+
+func noBufferProductor(chanGroup *sync.WaitGroup, noBuffer chan int) {
+	defer chanGroup.Done()
+	noBuffer <- 1
+	println("test")
+}
+
+func noBufferConsumer(chanGroup *sync.WaitGroup, noBuffer chan int) {
+	defer chanGroup.Done()
+	msg := <-noBuffer
+	println(msg)
+}
+
+func chanNoBuffer() {
+	var chanGroup1 sync.WaitGroup
+	chanGroup1.Add(2)
+
+	noBuffer := make(chan int)
+	//无缓存信道，如果没有从信道中取数据的协程，会报错
+	go noBufferConsumer(&chanGroup1, noBuffer)
+	go noBufferProductor(&chanGroup1, noBuffer)
+
+	chanGroup1.Wait()
 }
 
 func main() {
 	chanLock()
+
+	chanNoBuffer()
 }
