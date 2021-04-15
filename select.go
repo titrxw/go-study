@@ -76,6 +76,21 @@ func hasDefault() {
 	}
 }
 
+func closeChan(closech chan int) {
+	select {
+	case val := <-closech:
+		fmt.Printf("close %d", val)
+	}
+}
+
+func triggerCloseChan() {
+	closech := make(chan int)
+	go closeChan(closech)
+	time.Sleep(1 * time.Second)
+	close(closech)
+	time.Sleep(1 * time.Second)
+}
+
 func random() {
 	chanTest := make(chan string, 1)
 	chanTest1 := make(chan int, 1)
@@ -102,4 +117,6 @@ func main() {
 
 	random()
 	random()
+
+	triggerCloseChan()
 }
